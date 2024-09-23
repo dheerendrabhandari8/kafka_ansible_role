@@ -1,4 +1,4 @@
-   - name: update package
+   - name: update packages
      apt:
        update_cache: yes
        name: "*"
@@ -22,14 +22,14 @@
        dest: /tmp
        #mode: '0440'
        
-   - name: Extract foo.tgz in temp directory
+   - name: Extract file in temp directory
      ansible.builtin.unarchive:
        remote_src: yes
        src: /tmp/kafka-{{ kafka_version }}-src.tgz
        #remote_src: yes
        dest: /usr/local
 
-   - name: temp       
+   - name: zookeeper template file copy to remote server
      ansible.builtin.template:
        src: /home/ubuntu/kafka_ansible_role/templates/zookeeper.j2
        dest: /etc/systemd/system/zookeeper.service
@@ -37,7 +37,7 @@
        group: sudo 
          #      mode: '0644'   
 
-   - name: Template a file to /etc/file.conf
+   - name: kafka template file copy to remote server
      ansible.builtin.template:
        src: /home/ubuntu/kafka_ansible_role/templates/kafka.j2
        dest: /etc/systemd/system/kafka.service
@@ -49,7 +49,7 @@
      systemd:
         daemon_reload: yes
 
-   - name: Give insecure permissions to an existing file
+   - name: Give  permissions to gradle.properties file
      ansible.builtin.file:
         path: /usr/local/kafka-{{ kafka_version }}-src/gradle.properties
         owner: kafka
@@ -67,12 +67,12 @@
    
 
 
-   - name: Start service httpd, if not started
+   - name: Start zookeeper service
      ansible.builtin.service:
        name: zookeeper
        state: started
 
-   - name: Start service httpd, if not started
+   - name: Start kafka service
      ansible.builtin.service:
        name: kafka
          # state: present
