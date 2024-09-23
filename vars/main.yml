@@ -3,4 +3,4 @@
 #
 #
 kafka_version: '3.6.0'
-java_version: '21'
+java_version: '8'

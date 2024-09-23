@@ -49,6 +49,13 @@
      systemd:
         daemon_reload: yes
 
+   - name: Give insecure permissions to an existing file
+     ansible.builtin.file:
+        path: /usr/local/kafka-{{ kafka_version }}-src/gradle.properties
+        owner: kafka
+        group: sudo
+        mode: '777'
+
    - name: Run gradlew command to build jar
      ansible.builtin.command: 
          ./gradlew jar -PscalaVersion=2.13.11
