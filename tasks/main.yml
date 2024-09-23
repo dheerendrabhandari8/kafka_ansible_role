@@ -1,0 +1,72 @@
+   - name: update package
+     apt:
+       update_cache: yes
+       name: "*"
+       state: latest
+
+
+   - name: Install java 
+     apt: 
+       name: openjdk-{{ java_version }}-jdk
+       state: present
+
+   - name: Add the user 
+     ansible.builtin.user:
+       name: kafka
+       group: sudo
+
+
+   - name: Download kafka
+     get_url:
+       url: https://archive.apache.org/dist/kafka/{{ kafka_version }}/kafka-{{ kafka_version }}-src.tgz 
+       dest: /tmp
+       #mode: '0440'
+       
+   - name: Extract foo.tgz into /home/ubtunu/Downloads
+     ansible.builtin.unarchive:
+       remote_src: yes
+       src: /tmp/kafka-{{ kafka_version }}-src.tgz
+       #remote_src: yes
+       dest: /usr/local
+
+   - name: temp       
+     ansible.builtin.template:
+       src: /home/ubuntu/test/zookeeper.j2
+       dest: /etc/systemd/system/zookeeper.service
+       owner: kafka
+       group: sudo 
+         #      mode: '0644'   
+
+   - name: Template a file to /etc/file.conf
+     ansible.builtin.template:
+       src: /home/ubuntu/test/kafka.j2
+       dest: /etc/systemd/system/kafka.service
+       owner: kafka
+       group: sudo
+
+   
+   - name: Reload systemd manager configuration
+     systemd:
+        daemon_reload: yes
+
+   - name: Run gradlew command to build jar
+     ansible.builtin.command: 
+         ./gradlew jar -PscalaVersion=2.13.11
+     args:
+       chdir: /usr/local/kafka-{{ kafka_version }}-src
+     notify:
+        - start zookeeper
+        - start kafka
+   
+
+
+   - name: Start service httpd, if not started
+     ansible.builtin.service:
+       name: zookeeper
+       state: started
+
+   - name: Start service httpd, if not started
+     ansible.builtin.service:
+       name: kafka
+       state: present
+       state: started

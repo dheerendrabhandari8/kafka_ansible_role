@@ -1,0 +1,13 @@
+---
+# handlers file for kafka
+#
+- name: start kafka
+  ansible.builtin.service:
+        name: kafka
+        state: started
+
+
+- name: start zookeeper
+  ansible.builtin.service:
+        name: zookeeper
+        state: started
