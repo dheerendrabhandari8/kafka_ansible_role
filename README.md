@@ -21,6 +21,7 @@ Ssh-keygen is a tool for creating new authentication key pairs for SSH. Such key
 paste below command in ansible server 
 
 1- ssh-keygen 
+
 2- cat /home/ubuntu/.ssh/*.pub
 
 copy this .pub key and paste in worker node
