@@ -1,38 +1,36 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Kaka ansible role for debian family.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+aws account 
+create two ec2-instance one for ansible and one for worker node where your kafka will install
+for ansible you can create t2.miro instance 
+for kafka you have to create atleast 2core cpu and 4gb ram so you can use t2.medium instance
 
-Role Variables
+
+Commands
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+for ansible you have to create connection in between ansible node and worker node via ssh
+Ssh-keygen is a tool for creating new authentication key pairs for SSH. Such key pairs are used for automating logins, single sign-on, and for authenticating hosts.
 
-Dependencies
-------------
+paste below command in ansible server 
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+1- ssh-keygen 
+2- cat /home/ubuntu/.ssh/*.pub
+#copy this .pub key and paste in worker node
+ 
+3- vi /home/ubuntu/.ssh/authorized_keys
 
-Example Playbook
-----------------
+Paste your worker node IP in inventory file or you can use default path /etc/ansible/hosts 
+now check the ssh connection in between ansible node and worker node
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+ansible all -m ping 
 
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+If ping is successfull then run 
+ansible-plybook -i inventory kafka.yml
