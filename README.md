@@ -30,7 +30,10 @@ Paste your worker node IP in inventory file or you can use default path /etc/ans
 now check the ssh connection in between ansible node and worker node
 
 
-ansible all -m ping 
+4- ansible all -m ping 
 
 If ping is successfull then run 
-ansible-plybook -i inventory kafka.yml
+
+5- ansible-plybook -i inventory kafka.yml
+
+

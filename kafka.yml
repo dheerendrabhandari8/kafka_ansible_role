@@ -1,6 +1,6 @@
 ---
 
-- hosts: web
+- hosts: kafka
   become: true
   roles:
     - role: '/home/ubuntu/kafka_ansible_role'
