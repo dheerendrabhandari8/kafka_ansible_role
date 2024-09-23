@@ -32,7 +32,27 @@ Paste your worker node IP in inventory file or you can use default path /etc/ans
 now check the ssh connection in between ansible node and worker node
 
 
-4- ansible all -m ping 
+4- ansible -i inventory  -m ping all
+
+you will get response like below
+
+13.232.167.109 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+
+you will get response like below
+
+13.232.167.109 | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
 
 If ping is successfull then run 
 
