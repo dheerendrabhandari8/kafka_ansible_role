@@ -22,7 +22,7 @@
        dest: /tmp
        #mode: '0440'
        
-   - name: Extract foo.tgz into /home/ubtunu/Downloads
+   - name: Extract foo.tgz in temp directory
      ansible.builtin.unarchive:
        remote_src: yes
        src: /tmp/kafka-{{ kafka_version }}-src.tgz
@@ -31,7 +31,7 @@
 
    - name: temp       
      ansible.builtin.template:
-       src: /home/ubuntu/test/zookeeper.j2
+       src: /home/ubuntu/kafka_ansible_role/files/zookeeper.j2
        dest: /etc/systemd/system/zookeeper.service
        owner: kafka
        group: sudo 
@@ -39,7 +39,7 @@
 
    - name: Template a file to /etc/file.conf
      ansible.builtin.template:
-       src: /home/ubuntu/test/kafka.j2
+       src: /home/ubuntu/kafka_ansible_role/files/kafka.j2
        dest: /etc/systemd/system/kafka.service
        owner: kafka
        group: sudo
@@ -68,5 +68,5 @@
    - name: Start service httpd, if not started
      ansible.builtin.service:
        name: kafka
-       state: present
+         # state: present
        state: started
