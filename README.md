@@ -29,6 +29,7 @@ copy this .pub key and paste in worker node
 3- vi /home/ubuntu/.ssh/authorized_keys
 
 Paste your worker node IP in inventory file or you can use default path /etc/ansible/hosts 
+
 now check the ssh connection in between ansible node and worker node
 
 
