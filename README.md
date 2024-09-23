@@ -22,7 +22,7 @@ paste below command in ansible server
 
 1- ssh-keygen 
 2- cat /home/ubuntu/.ssh/*.pub
-#copy this .pub key and paste in worker node
+copy this .pub key and paste in worker node
  
 3- vi /home/ubuntu/.ssh/authorized_keys
 
